@@ -24,7 +24,6 @@ public class ToastActivity extends AppCompatActivity implements View.OnClickList
         buttonToast.setOnClickListener(this);
         buttonCustomToast.setOnClickListener(this);
 
-
     }
 
     @Override

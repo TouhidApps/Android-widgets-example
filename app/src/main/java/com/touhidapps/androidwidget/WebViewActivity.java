@@ -4,10 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class WebViewActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,7 +35,6 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
 
         webView = (WebView) findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(new WebViewClient()); // prevent open outside browser
         webView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 if (progress < 100 && progressBar.getVisibility() == ProgressBar.GONE) {
@@ -43,6 +46,21 @@ public class WebViewActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
         });
+
+
+        //        webView.setWebViewClient(new WebViewClient()); // prevent open outside browser
+
+        webView.setWebViewClient(new WebViewClient() { // prevent open outside browser and error handling
+
+            // to remove no internet error page
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                webView.loadUrl("file:///android_asset/index.html");
+                // or
+//                webView.loadUrl("about:blank"); // for blank page
+            }
+        });
+
 
 
 
